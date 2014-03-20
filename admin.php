@@ -2,15 +2,13 @@
 
 require('header.php');
 
+$products = getProducts();
+
 ?>
 
 <h1>Settings</h1>
 
 <?php
-if(isset($_SESSION['admin']['message'])) {
-	echo $_SESSION['admin']['message'];
-	unset($_SESSION['admin']['message']);
-}
 if(isset($_POST['title'])) {
 	$xml_file->website_title = $_POST['title'];
 	$xml_file->asXML($main_directory . '/settings.xml');
@@ -38,21 +36,53 @@ if (isset($_SESSION['add_product']['error'])) {
 	<button type="submit">Add Product</button>
 </form>
 
-<a href="#importList" id="importListDisplay">Add Codes to Product</a>
+<a href="#importList" id="importListDisplay">Add Codes to Product</a><br />
 
 <form enctype="multipart/form-data" action="import.php" method="POST" id="importListForm">
+	<?php
+	if(isset($_SESSION['admin']['message'])) {
+		echo $_SESSION['admin']['message'];
+		unset($_SESSION['admin']['message']);
+	}
+	?>
+	<p>If single code is entered, list will be ignored.</p>
 	<select name="product">
 		<?php
-		foreach(getProducts() as $product) {
+		foreach($products as $product) {
+			echo '<option value="' . $product['product_id'] . '">' . $product['product_name'] . '</option>';
+		}
+		?>
+	</select>
+	<input type="text" name="code" placeholder="code"/>
+	<input type="file" name="list" />
+	<button type="submit">Add Code(s)</button>
+</form>
+
+<?php
+if(!empty($products)):
+?>
+<a href="#removeCode" id="removeCodeDisplay">Remove Code or Product</a>
+<form action="remove.php" method="POST" id="removeCodeForm">
+	<?php
+	if(isset($_SESSION['remove']['message'])) {
+		echo $_SESSION['remove']['message'];
+		unset($_SESSION['remove']);
+	}
+	?>
+	<p>If no code is provided, the product will be removed. Otherwise the code of product picked will be removed.</p>
+	<select name="product">
+		<?php
+		foreach($products as $product) {
 			echo '<option value="' . $product['product_id'] . '">' . $product['product_name'] . '</option>';
 		}
 		?>
 	</select>
 	<input type="text" name="code" />
-	<input type="file" name="list" />
-	<button type="submit">Add Code(s)</button>
+	<button type="submit" onclick="return confirm('Are you sure?');">Remove</button>
 </form>
-
+<?php
+endif;
+?>
 <script>
 $(document).ready(function() {
 
@@ -62,6 +92,10 @@ $("#addProductDisplay").click(function() {
 
 $("#importListDisplay").click(function() {
 	$("#importListForm").toggle();
+});
+
+$("#removeCodeDisplay").click(function() {
+	$("#removeCodeForm").toggle();
 });
 
 });
