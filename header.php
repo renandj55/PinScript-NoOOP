@@ -18,6 +18,7 @@ require('inc/config.inc.php');
 	<div id="header">
 		<h1><?php echo $website_title; ?></h1>
 		<ul>
+			<li><a href="index.php">Home</a></li>
 			<li><a href="admin.php">Admin</a></li>
 		</ul>
 	</div>

@@ -34,10 +34,11 @@ if (isset($_SESSION['add_product']['error'])) {
 <form action="add_product.php" method="POST" id="addProductForm">
 	<input type="text" name="name" placeholder="Title" value="<?php echo (isset($_SESSION['add_product']['name']) ? $_SESSION['add_product']['name'] : ''); ?>" maxlength="100"/>
 	<textarea name="description" placeholder="Description"><?php echo (isset($_SESSION['add_product']['description']) ? $_SESSION['add_product']['description'] : ''); ?></textarea>
+	<input type="text" name="price" placeholder="Price" value="<?php echo (isset($_SESSION['add_product']['price']) ? $_SESSION['add_product']['price'] : ''); ?>" />
 	<button type="submit">Add Product</button>
 </form>
 
-<a href="#importList" id="importListDisplay">Import List</a>
+<a href="#importList" id="importListDisplay">Add Codes to Product</a>
 
 <form enctype="multipart/form-data" action="import.php" method="POST" id="importListForm">
 	<select name="product">
@@ -47,8 +48,9 @@ if (isset($_SESSION['add_product']['error'])) {
 		}
 		?>
 	</select>
+	<input type="text" name="code" />
 	<input type="file" name="list" />
-	<button type="submit">Import</button>
+	<button type="submit">Add Code(s)</button>
 </form>
 
 <script>
