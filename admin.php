@@ -61,7 +61,7 @@ if (isset($_SESSION['add_product']['error'])) {
 <?php
 if(!empty($products)):
 ?>
-<a href="#removeCode" id="removeCodeDisplay">Remove Code or Product</a>
+<a href="#removeCode" id="removeCodeDisplay">Remove Code or Product</a><br />
 <form action="remove.php" method="POST" id="removeCodeForm">
 	<?php
 	if(isset($_SESSION['remove']['message'])) {
@@ -80,9 +80,51 @@ if(!empty($products)):
 	<input type="text" name="code" />
 	<button type="submit" onclick="return confirm('Are you sure?');">Remove</button>
 </form>
+
+<a href="#viewCodes" id="viewCodeDisplay">View Codes</a>
+
+<form action="view.php" method="POST" id="viewCodeForm">
+	<select name="product">
+		<?php
+		foreach($products as $product) {
+			echo '<option value="' . $product['product_id'] . '">' . $product['product_name'] . '</option>';
+		}
+		?>
+	</select>
+	<button type="submit">Go</button>
+</form>
 <?php
 endif;
 ?>
+
+<?php
+
+if(!empty($_SESSION['codes'])) {
+	echo '<form method="POST" action="delete.php">';
+	echo '<table>
+	<tr>
+		<th>Select</th>
+		<th>Code ID</th>
+		<th>Product</th>
+		<th>Code</th>
+		<th>Date Added</th>
+	</tr>';
+	foreach($_SESSION['codes'] as $code) {
+		echo '<tr>';
+		echo '<td><input type="checkbox" name="codes[]" value="' . $code['code_id'] . '"/></td>';
+		echo '<td>' . $code['code_id'] . '</td>';
+		echo '<td>' . $code['product_name'] . '</td>';
+		echo '<td>' . $code['code_content'] . '</td>';
+		echo '<td>' . date("F jS Y h:i:s A", $code['code_timestamp']) . '</td>';
+		echo '</tr>';
+	}
+	echo '</table>
+	<button type="submit">Delete Selected</button>
+	</form>';
+	unset($_SESSION['codes']);
+}
+?>
+
 <script>
 $(document).ready(function() {
 
@@ -98,9 +140,15 @@ $("#removeCodeDisplay").click(function() {
 	$("#removeCodeForm").toggle();
 });
 
+$("#viewCodeDisplay").click(function() {
+	$("#viewCodeForm").toggle();
+});
+
 });
 </script>
+
 <?php
+
 
 require('footer.php');
 
