@@ -12,6 +12,13 @@ $products = getProducts();
 if(isset($_POST['title'])) {
 	$xml_file->website_title = $_POST['title'];
 	$xml_file->asXML($main_directory . '/settings.xml');
+	$_SESSION['admin']['message'] = 'Changed website title to: ' . $_POST['title'];
+}
+
+if(isset($_POST['show'])) {
+	$xml_file->code_count = $_POST['show'];
+	$xml_file->asXML($main_directory . '/settings.xml');
+	$_SESSION['admin']['message'] = 'Changed code count to: ' . $_POST['show'];
 }
 
 ?>
@@ -19,6 +26,13 @@ if(isset($_POST['title'])) {
 <form action="" method="POST">
 	<input type="text" placeholder="Website Title" name="title"/>
 	<button type="submit">Change Title</button>
+</form>
+
+<form action="" method="POST">
+	<label>Show Code Count</label>
+	<input type="radio" name="show" value="yes" />Yes
+	<input type="radio" name="show" value="no" />No
+	<button type="submit">Change</button>
 </form>
 
 <?php

@@ -14,6 +14,15 @@ foreach(getProducts() as $product):
 		<span id="price">
 			<?php echo $product['product_price']; ?>
 		</span>
+		<?php
+			if($code_count == 'yes'):
+		?>
+			<span id="codeCount">
+				<?php echo getCodeCount($product['product_id']); ?>
+			</span>
+		<?php
+			endif;
+		?>
 		<button id="paypal<?php echo $product['product_id']; ?>">Purchase with Paypal</button>
 		<button id="bitcoin<?php echo $product['product_id']; ?>">Purchase with Bitcoin</button>
 	</article>
