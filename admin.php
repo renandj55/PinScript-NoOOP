@@ -9,16 +9,38 @@ $products = getProducts();
 <h1>Settings</h1>
 
 <?php
+
+if(isset($_SESSION['admin']['message'])) {
+	echo '<div class="success">' . $_SESSION['admin']['message'] . '</div>';
+	unset($_SESSION['admin']['message']);
+}
+
 if(isset($_POST['title'])) {
 	$xml_file->website_title = $_POST['title'];
 	$xml_file->asXML($main_directory . '/settings.xml');
 	$_SESSION['admin']['message'] = 'Changed website title to: ' . $_POST['title'];
+	header('Location: admin.php');
 }
 
 if(isset($_POST['show'])) {
 	$xml_file->code_count = $_POST['show'];
 	$xml_file->asXML($main_directory . '/settings.xml');
 	$_SESSION['admin']['message'] = 'Changed code count to: ' . $_POST['show'];
+	header('Location: admin.php');
+}
+
+if(isset($_POST['btc_allow'])) {
+	$xml_file->btc_allow = $_POST['btc_allow'];
+	$xml_file->asXML($main_directory . '/settings.xml');
+	$_SESSION['admin']['message'] = 'Bitcoins are allowed: ' . $_POST['btc_allow'];
+	header('Location: admin.php');
+}
+
+if(isset($_POST['pp_allow'])) {
+	$xml_file->pp_allow = $_POST['pp_allow'];
+	$xml_file->asXML($main_directory . '/settings.xml');
+	$_SESSION['admin']['message'] = 'PayPal is allowed: ' . $_POST['pp_allow'];
+	header('Location: admin.php');
 }
 
 ?>
@@ -35,10 +57,24 @@ if(isset($_POST['show'])) {
 	<button type="submit">Change</button>
 </form>
 
+<form action="" method="POST">
+	<label>Allow Bitcoin Payments</label>
+	<input type="radio" name="btc_allow" value="yes" />Yes
+	<input type="radio" name="btc_allow" value="no" />No
+	<button type="submit">Change</button>
+</form>
+
+<form action="" method="POST">
+	<label>Allow PayPal Payments</label>
+	<input type="radio" name="pp_allow" value="yes" />Yes
+	<input type="radio" name="pp_allow" value="no" />No
+	<button type="submit">Change</button>
+</form>
 <?php
 
 if (isset($_SESSION['add_product']['error'])) {
 	echo $_SESSION['add_product']['error'];
+	unset($_SESSION['add_product']['error']);
 }
 ?>
 <a href="#addProduct" id="addProductDisplay">Add Product</a><br />
@@ -53,12 +89,6 @@ if (isset($_SESSION['add_product']['error'])) {
 <a href="#importList" id="importListDisplay">Add Codes to Product</a><br />
 
 <form enctype="multipart/form-data" action="import.php" method="POST" id="importListForm">
-	<?php
-	if(isset($_SESSION['admin']['message'])) {
-		echo $_SESSION['admin']['message'];
-		unset($_SESSION['admin']['message']);
-	}
-	?>
 	<p>If single code is entered, list will be ignored.</p>
 	<select name="product">
 		<?php
@@ -77,12 +107,6 @@ if(!empty($products)):
 ?>
 <a href="#removeCode" id="removeCodeDisplay">Remove Code or Product</a><br />
 <form action="remove.php" method="POST" id="removeCodeForm">
-	<?php
-	if(isset($_SESSION['remove']['message'])) {
-		echo $_SESSION['remove']['message'];
-		unset($_SESSION['remove']);
-	}
-	?>
 	<p>If no code is provided, the product will be removed. Otherwise the code of product picked will be removed.</p>
 	<select name="product">
 		<?php
@@ -107,6 +131,7 @@ if(!empty($products)):
 	</select>
 	<button type="submit">Go</button>
 </form>
+
 <?php
 endif;
 ?>

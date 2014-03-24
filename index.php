@@ -22,9 +22,17 @@ foreach(getProducts() as $product):
 			</span>
 		<?php
 			endif;
+			if($pp_allow == 'yes'):
 		?>
 		<button id="paypal<?php echo $product['product_id']; ?>">Purchase with Paypal</button>
+		<?php
+			endif;
+			if($btc_allow == 'yes'):
+		?>
 		<button id="bitcoin<?php echo $product['product_id']; ?>">Purchase with Bitcoin</button>
+		<?php
+			endif;
+		?>
 	</article>
 </div>
 

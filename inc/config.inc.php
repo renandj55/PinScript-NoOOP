@@ -10,6 +10,8 @@ $xml_file = simplexml_load_file($main_directory . '/settings.xml');
 
 $website_title = $xml_file->website_title;
 $code_count = $xml_file->code_count;
+$btc_allow = $xml_file->btc_allow;
+$pp_allow = $xml_file->pp_allow;
 
 function getProducts() {
 	global $db;

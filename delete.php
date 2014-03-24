@@ -9,6 +9,6 @@ if(!empty($_POST['codes'])) {
 	}
 }
 
-header('admin.php');
+header('Location: admin.php');
 
 ?>
