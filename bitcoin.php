@@ -22,8 +22,8 @@ if(isset($_POST['confirmPurchase'])) {
 		echo '<div class="error">' . $errors[0] . '</div>';
 	} else {
 
-		$my_address = '1A8JiWcwvpY7tAopUkSnGuEYHmzGYfZPiq';
-		$my_callback_url = 'https://www.tenquota.com/';
+		$my_address = '14tAmA7DGGi6uEDt3WPQnTwxWrj14K1qay';
+		$my_callback_url = 'https://www.tenquota.com/pinscript/bitcoin_complete.php';
 		$root_url = 'https://blockchain.info/api/receive';
 
 		$parameters = 'method=create&address=' . $my_address .'&callback='. urlencode($my_callback_url);
@@ -55,7 +55,7 @@ if(isset($_POST['confirmPurchase'])) {
 
 <p>You are purchasing this item for $<?php echo $_SESSION['btc']['itemPrice']; ?> USD / <?php echo $_SESSION['btc']['btcPrice']; ?> BTC.</p>
 
-<p>Fill out the fields below and press the "Confirm" button. Do NOT send the money yet.
+<p>Fill out the fields below and press the "Confirm" button.
 
 <form action="" method="POST">
 	<label>Your E-mail - Code destination</label>
