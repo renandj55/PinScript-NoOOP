@@ -2,6 +2,6 @@
 <settings>
 	<website_title>Pin Script</website_title>
 	<code_count>yes</code_count>
-	<btc_allow>no</btc_allow>
+	<btc_allow>yes</btc_allow>
 	<pp_allow>yes</pp_allow>
 </settings>

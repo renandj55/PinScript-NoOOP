@@ -1,0 +1,7 @@
+{
+	"require": {
+  		"php": ">=5.3",
+  		"ext-curl": "*",
+  		"paypal/merchant-sdk-php":"v3.6.106"
+	}
+}
